@@ -1,210 +1,237 @@
-# FarmMap - Plant Geolocation System
+# GeoTag Plants - Farm Management System
 
-A hackathon-style web application for geotagging and visualizing plants on your farm using AI-powered image analysis.
+A production-ready frontend application that helps farmers visualize their crop locations by uploading geo-tagged plant images and displaying them on an interactive farm map.
 
-## Features
+## 🌟 Features
 
-### Phase 1: Image Upload & Cloudinary Integration
-- Drag-and-drop or click-to-upload image interface
-- Real-time upload progress tracking
-- Integration with Cloudinary for secure image storage
-- Plant name and species metadata capture
+### Phase 1: Image Upload & Processing
+- **Drag-and-drop interface** for multiple image uploads
+- **Support for JPG, PNG formats** with file validation
+- **Real-time upload progress** tracking
+- **Batch upload support** for multiple images
+- **Error handling** with user-friendly messages
 
 ### Phase 2: Location Data Extraction
-- Automated geolocation extraction from uploaded images
-- Confidence scoring for location accuracy
-- Integration-ready API endpoint for location services
-- Support for EXIF data and AI-powered location inference
+- **Automatic GPS extraction** from image metadata
+- **API integration** with AlumnX location extraction service
+- **Real-time processing** status updates
 
-### Phase 3: Farm Map Visualization
-- Custom SVG-based interactive map visualization
-- Plant markers with color-coded confidence levels
-- Clickable markers showing plant details and thumbnail images
-- Real-time map updates as new plants are added
-- Zoom controls and bounds fitting for detailed farm exploration
+### Phase 3: Farm Visualization
+- **Interactive map** with plant markers
+- **Zoom and pan functionality** for detailed exploration
+- **Plant information tooltips** on hover
+- **Responsive design** for mobile and desktop
+- **Grid-based visualization** with coordinate system
 
-### Phase 4: Data Management & Persistence
-- Full CRUD operations on plant records
-- Search and filter capabilities
-- Multiple sort options (date, name, confidence)
-- Export functionality (JSON and CSV formats)
-- Persistent local storage with optional backend integration
+### Phase 4: Data Management
+- **Plant inventory management** with search and filter
+- **Delete functionality** for removing plants
+- **Sort options** (date, name, location)
+- **Real-time statistics** dashboard
+- **Plant detail view** with image preview
 
-## Setup & Configuration
+## 🛠 Tech Stack
 
-### Environment Variables
+- **Framework**: Next.js 16 with App Router
+- **Language**: TypeScript
+- **State Management**: Redux Toolkit
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI primitives
+- **Image Storage**: Cloudinary
+- **Icons**: Lucide React
+- **API Integration**: RESTful APIs
 
-Create a `.env.local` file in the root directory with the following variables:
+## 🚀 Getting Started
 
-```env
-# Cloudinary Configuration
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
-NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=unsigned_preset
-
-# Location Extraction API
-NEXT_PUBLIC_LOCATION_API_ENDPOINT=https://api.example.com/extract-location
-```
-
-#### Getting Cloudinary Credentials:
-1. Sign up at https://cloudinary.com
-2. Navigate to Dashboard
-3. Copy your Cloud Name and create an unsigned upload preset
-
-#### Location API Endpoint:
-- Option 1: Use the provided `/api/extract-location` route (returns mock data)
-- Option 2: Replace with your actual location extraction service (alumnx API, Google Vision, etc.)
+### Prerequisites
+- Node.js (v16+) and npm/yarn
+- Cloudinary free tier account
 
 ### Installation
 
-```bash
-npm install
-# or
-yarn install
-# or
-pnpm install
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd geotagplants
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp env.example .env.local
+   ```
+   
+   Configure the following variables in `.env.local`:
+   ```env
+   # Cloudinary Configuration
+   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+   NEXT_PUBLIC_CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+
+   # API Configuration
+   NEXT_PUBLIC_API_BASE_URL=https://api.alumnx.com
+
+   # User Email (for demo purposes)
+   NEXT_PUBLIC_USER_EMAIL=farmer@example.com
+   ```
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open [http://localhost:3000](http://localhost:3000)** in your browser
+
+## 📁 Project Structure
+
 ```
-
-### Development
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Project Structure
-
-```
-.
-├── app/
-│   ├── page.tsx                 # Main dashboard
-│   ├── layout.tsx               # Root layout
-│   ├── globals.css              # Global styles and design tokens
-│   └── api/
-│       └── extract-location/    # Location extraction API
+src/
+├── app/                    # Next.js App Router
+│   ├── layout.tsx         # Root layout with providers
+│   ├── page.tsx           # Main application page
+│   └── globals.css        # Global styles
 ├── components/
-│   ├── phases/
-│   │   ├── image-upload-panel.tsx      # Phase 1
-│   │   ├── map-visualization-panel.tsx # Phase 3
-│   │   └── plant-list-panel.tsx        # Phase 4
-│   └── ui/                      # Shadcn UI components
+│   ├── ui/                # Reusable UI components
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   └── progress.tsx
+│   ├── phases/            # Main feature components
+│   │   ├── image-upload-panel.tsx
+│   │   ├── map-visualization-panel.tsx
+│   │   └── plant-list-panel.tsx
+│   └── providers.tsx     # Redux provider wrapper
 ├── lib/
-│   ├── types.ts                 # TypeScript interfaces
-│   └── services/
-│       ├── cloudinary.ts        # Cloudinary integration
-│       ├── location-api.ts      # Location extraction API
-│       └── storage.ts           # Data persistence layer
-└── public/                      # Static assets
+│   ├── services/          # API services
+│   │   ├── cloudinary.ts
+│   │   └── location-api.ts
+│   ├── slices/            # Redux slices
+│   │   ├── plantsSlice.ts
+│   │   └── uploadSlice.ts
+│   ├── store.ts           # Redux store configuration
+│   ├── types.ts           # TypeScript type definitions
+│   └── utils.ts           # Utility functions
 ```
 
-## Technology Stack
+## 🔧 Configuration
 
-- **Frontend**: Next.js 16, React 19, TypeScript
-- **UI Components**: Shadcn UI, Radix UI, Tailwind CSS
-- **Map Visualization**: Custom SVG-based interactive map
-- **Image Storage**: Cloudinary
-- **Data Persistence**: LocalStorage (with backend-ready architecture)
-- **Icons**: Lucide React
+### Cloudinary Setup
 
-## Features in Detail
+1. **Sign up** at [Cloudinary](https://cloudinary.com/users/register/free)
+2. **Get your credentials**: Cloud Name, API Key, and API Secret
+3. **Configure upload preset** for unsigned uploads (default: `ml_default`)
+4. **Add credentials** to your `.env.local` file
 
-### Image Upload
-- Supports all common image formats (JPEG, PNG, WebP, etc.)
-- Progress tracking with percentage display
-- Form validation for plant name requirement
-- Image preview before upload
+### API Integration
 
-### Location Extraction
-- Integrates with location API for automatic geolocation
-- Confidence scoring (0-1 scale)
-- Fallback to mock data for development
-- Extensible architecture for custom location services
+The application integrates with two main APIs:
 
-### Farm Map
-- Custom interactive SVG map visualization
-- Color-coded plant markers (green: >80% confidence, yellow: 60-80%, red: <60%)
-- Click-to-select functionality with instant marker details
-- Automatic bounds calculation for optimal view
-- Zoom and home controls for map navigation
-- Delete records directly from map
-- Real-time statistics display
+1. **Location Extraction API**
+   - Endpoint: `POST /api/hackathons/extract-latitude-longitude`
+   - Extracts GPS coordinates from uploaded images
 
-### Data Management
-- Comprehensive plant record listing
-- Full-text search by plant name or species
-- Multi-field sorting (date, name, confidence)
-- Ascending/descending sort order
-- JSON and CSV export options
-- Statistics dashboard (total records, average confidence, unique species)
+2. **Plant Data Management API**
+   - Endpoint: `POST /api/hackathons/save-plant-location-data`
+   - Saves and manages plant location data
 
-## Evaluation Criteria Alignment
+## 🎯 Usage Guide
 
-This application addresses the hackathon requirements:
+### Uploading Plant Images
 
-**Functionality (25%)**
-- ✅ Image upload with Cloudinary integration
-- ✅ Location extraction with confidence scoring
-- ✅ Map visualization with interactive markers
-- ✅ Full CRUD data management
+1. Navigate to the **Upload** tab
+2. **Drag and drop** images or click to browse
+3. **Monitor progress** in real-time
+4. **View extracted location data** automatically
 
-**User Experience (15%)**
-- ✅ Intuitive tabbed interface
-- ✅ Real-time visual feedback (progress bars, loading states)
-- ✅ Responsive design for mobile and desktop
-- ✅ Clear visual hierarchy and navigation
+### Viewing Farm Map
 
-**Technical Excellence (40%)**
-- ✅ Production-ready architecture
-- ✅ TypeScript for type safety
-- ✅ Modular service layer
-- ✅ Error handling and validation
-- ✅ Environmental configuration
-- ✅ Performance optimizations (lazy loading, efficient storage)
-- ✅ Browser-native SVG rendering (no external library dependencies)
+1. Switch to the **Farm Map** tab
+2. **Interact with markers** to see plant details
+3. **Use zoom controls** for detailed exploration
+4. **Click on plants** to select and view details
 
-**Innovation & Polish (20%)**
-- ✅ Multiple export formats (JSON, CSV)
-- ✅ Advanced filtering and sorting
-- ✅ Statistics dashboard
-- ✅ Responsive mobile-first design
-- ✅ Accessibility considerations
-- ✅ Color-coded confidence visualization
+### Managing Plant Inventory
 
-## Future Enhancements
+1. Go to the **Plant List** tab
+2. **Search** by name or coordinates
+3. **Sort** by date, name, or location
+4. **Delete** unwanted plants
+5. **View statistics** in the sidebar
 
-- Backend database integration (PostgreSQL, MongoDB, etc.)
-- User authentication and multi-farm support
-- Real AI-powered location extraction (Google Vision, TensorFlow)
-- EXIF data parsing for accurate geolocation
-- Plant health indicators and disease detection
-- Historical tracking and crop rotation planning
-- Mobile app for field data collection
-- Real-time collaboration features
+## 🎨 Design Features
 
-## Deployment
+- **Mobile-first responsive design**
+- **Agricultural color palette** (greens, earth tones)
+- **Intuitive navigation** with tabbed interface
+- **Real-time feedback** with loading states
+- **Accessible components** following ARIA standards
+- **Smooth transitions** and micro-interactions
 
-Deploy to Vercel (recommended for Next.js):
+## 🔍 Error Handling
 
-```bash
-npm run build
-# Commit to GitHub and connect repository to Vercel
-```
+- **File validation** for type and size
+- **Network error handling** with retry options
+- **User-friendly error messages**
+- **Graceful degradation** for API failures
+- **Toast notifications** for user feedback
 
-Or deploy manually:
+## 📱 Browser Support
 
-```bash
-npm run build
-npm start
-```
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-## License
+## 🚀 Deployment
 
-MIT
+### Vercel (Recommended)
 
-## Support
+1. **Connect your repository** to Vercel
+2. **Configure environment variables** in Vercel dashboard
+3. **Deploy automatically** on push to main branch
 
-For issues or questions, please check the documentation or open an issue in the project repository.
+### Other Platforms
+
+The application can be deployed to any platform supporting Next.js:
+- Netlify
+- GitHub Pages
+- AWS Amplify
+- DigitalOcean App Platform
+
+## 🤝 Contributing
+
+1. **Fork the repository**
+2. **Create a feature branch**
+3. **Make your changes**
+4. **Add tests** if applicable
+5. **Submit a pull request**
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🆘 Support
+
+For support and questions:
+- **Email**: support@alumnx.com
+- **Documentation**: Check inline code comments
+- **Issues**: Create an issue in the repository
+
+## 🔮 Future Enhancements
+
+- **Offline support** with service workers
+- **Real-time collaboration** for multiple farmers
+- **Plant health indicators** with color coding
+- **Historical timeline** view of farm changes
+- **Export functionality** (CSV/JSON)
+- **Dark mode** theme switching
+- **Plant analytics** dashboard
+- **AI-powered plant identification**
+- **Geofencing** for farm boundaries
+
+---
+
+**Built with ❤️ for farmers and agricultural technology**
