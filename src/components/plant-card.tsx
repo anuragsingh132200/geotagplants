@@ -1,6 +1,6 @@
 'use client';
 
-import { Plant } from '@/lib/types';
+import { Plant, getPlantId } from '@/lib/types';
 import { MapPin, Calendar, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
@@ -27,7 +27,7 @@ export function PlantCard({ plant }: { plant: Plant }) {
 
     const handleDelete = async () => {
         setIsDeleting(true);
-        dispatch(removePlant(plant.id));
+        dispatch(removePlant(getPlantId(plant)));
         setIsDeleting(false);
     };
 

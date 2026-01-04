@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Plant, PlantFormData, ApiResponse } from '../types';
+import { Plant, PlantFormData, ApiResponse, getPlantId } from '../types';
 
 interface PlantsState {
   plants: Plant[];
@@ -38,6 +38,29 @@ export const savePlantData = createAsyncThunk(
   }
 );
 
+export const fetchPlantsData = createAsyncThunk(
+  'plants/fetchPlantsData',
+  async (emailId: string): Promise<Plant[]> => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hackathons/get-plant-location-data`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ emailId }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch plants data');
+    }
+
+    const result: ApiResponse<Plant[]> = await response.json();
+    return result.data || [];
+  }
+);
+
 export const deletePlant = createAsyncThunk(
   'plants/deletePlant',
   async (plantId: string): Promise<string> => {
@@ -70,24 +93,36 @@ const plantsSlice = createSlice({
       state.plants.push(action.payload);
     },
     updatePlant: (state, action: PayloadAction<Plant>) => {
-      const index = state.plants.findIndex(p => p.id === action.payload.id);
+      const index = state.plants.findIndex(p => getPlantId(p) === getPlantId(action.payload));
       if (index !== -1) {
         state.plants[index] = action.payload;
       }
     },
     removePlant: (state, action: PayloadAction<string>) => {
-      state.plants = state.plants.filter(p => p.id !== action.payload);
+      state.plants = state.plants.filter(p => getPlantId(p) !== action.payload);
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchPlantsData.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPlantsData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.plants = action.payload;
+      })
+      .addCase(fetchPlantsData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch plants data';
+      })
       .addCase(savePlantData.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(savePlantData.fulfilled, (state, action) => {
         state.loading = false;
-        const existingIndex = state.plants.findIndex(p => p.id === action.payload.id);
+        const existingIndex = state.plants.findIndex(p => getPlantId(p) === getPlantId(action.payload));
         if (existingIndex !== -1) {
           state.plants[existingIndex] = action.payload;
         } else {
@@ -104,7 +139,7 @@ const plantsSlice = createSlice({
       })
       .addCase(deletePlant.fulfilled, (state, action) => {
         state.loading = false;
-        state.plants = state.plants.filter(p => p.id !== action.payload);
+        state.plants = state.plants.filter(p => getPlantId(p) !== action.payload);
       })
       .addCase(deletePlant.rejected, (state, action) => {
         state.loading = false;

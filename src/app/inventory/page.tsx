@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { PlantCard } from '@/components/plant-card';
 import { RootState } from '@/lib/store';
+import { getPlantId } from '@/lib/types';
 
 export default function InventoryPage() {
     const { plants, loading, error } = useSelector((state: RootState) => state.plants);
@@ -61,7 +62,7 @@ export default function InventoryPage() {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredPlants?.map((plant) => (
-                        <PlantCard key={plant.id} plant={plant} />
+                        <PlantCard key={getPlantId(plant)} plant={plant} />
                     ))}
                 </div>
             )}

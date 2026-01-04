@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { Plant } from '@/lib/types';
+import { Plant, getPlantId } from '@/lib/types';
 import 'leaflet/dist/leaflet.css';
 
 // Fix Leaflet default marker icon
@@ -75,7 +75,7 @@ export default function FarmMap({ plants, selectedPlant }: FarmMapProps) {
             <MapUpdater center={center} />
 
             {plants?.map((plant) => (
-                <Marker key={plant.id} position={[plant.latitude, plant.longitude]}>
+                <Marker key={getPlantId(plant)} position={[plant.latitude, plant.longitude]}>
                     <Popup>
                         <div className="text-center p-2">
                             <img

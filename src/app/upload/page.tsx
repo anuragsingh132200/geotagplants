@@ -69,7 +69,7 @@ export default function UploadPage() {
 
             // 2. Extract Location
             const extractRes = await dispatch(extractLocationData({
-                emailId: settings.email,
+                emailId: email,
                 imageName: imageName,
                 imageUrl: imageUrl,
             })).unwrap();
@@ -96,7 +96,7 @@ export default function UploadPage() {
                 imageUrl: cloudinaryUrl,
                 latitude: coords.lat,
                 longitude: coords.lng,
-                emailId: settings.email,
+                emailId: email,
             })).unwrap();
             router.push('/inventory');
         } catch (error) {

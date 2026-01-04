@@ -1,4 +1,4 @@
-import { LocationData, ApiResponse } from '../types';
+import { LocationData, ApiResponse, Plant } from '../types';
 
 export const extractLocationData = async (
   emailId: string,
@@ -51,4 +51,24 @@ export const savePlantLocationData = async (plantData: {
   }
 
   return response.json();
+};
+
+export const getPlantLocationData = async (emailId: string): Promise<Plant[]> => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hackathons/get-plant-location-data`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ emailId }),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch plant location data');
+  }
+
+  const result: ApiResponse<Plant[]> = await response.json();
+  return result.data || [];
 };

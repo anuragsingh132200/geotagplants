@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Cloud, User, CheckCircle } from 'lucide-react';
+import { Cloud, User, CheckCircle, Settings } from 'lucide-react';
 
 export default function SettingsPage() {
     const email = process.env.NEXT_PUBLIC_USER_EMAIL || 'anurag132200@gmail.com';
@@ -17,36 +17,28 @@ export default function SettingsPage() {
             <Card className="shadow-lg border-border/60">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                        <User className="w-5 h-5 text-primary" />
-                        <span>Account</span>
+                        <Settings className="w-5 h-5 text-primary" />
+                        <span>System Configuration</span>
                     </CardTitle>
+                    <CardDescription>
+                        Current system settings and configuration status.
+                    </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
                         <div className="flex items-center gap-2">
+                            <User className="w-4 h-4 text-muted-foreground" />
                             <span className="text-sm text-muted-foreground">Email:</span>
                             <span className="text-sm font-medium">{email}</span>
                         </div>
                         <CheckCircle className="w-4 h-4 text-primary" />
                     </div>
-                </CardContent>
-            </Card>
-
-            <Card className="shadow-lg border-border/60">
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        <Cloud className="w-5 h-5 text-primary" />
-                        <span>Cloud Storage</span>
-                    </CardTitle>
-                    <CardDescription>
-                        Connected to Cloudinary for image uploads.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
+                    
                     <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
                         <div className="flex items-center gap-2">
-                            <span className="text-sm text-muted-foreground">Cloud Name:</span>
-                            <span className="text-sm font-medium">{cloudName}</span>
+                            <Cloud className="w-4 h-4 text-muted-foreground" />
+                            <span className="text-sm text-muted-foreground">Cloud Storage:</span>
+                            <span className="text-sm font-medium">Connected ({cloudName})</span>
                         </div>
                         <CheckCircle className="w-4 h-4 text-primary" />
                     </div>

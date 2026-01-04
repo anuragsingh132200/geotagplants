@@ -1,5 +1,6 @@
 export interface Plant {
-  id: string;
+  id?: string;
+  _id?: string;
   emailId: string;
   imageName: string;
   imageUrl: string;
@@ -12,6 +13,10 @@ export interface Plant {
   };
   createdAt: string;
   updatedAt: string;
+}
+
+export function getPlantId(plant: Plant): string {
+  return plant.id || plant._id || `plant-${plant.imageName}-${plant.latitude}-${plant.longitude}`;
 }
 
 export interface UploadProgress {
@@ -32,6 +37,7 @@ export interface ApiResponse<T> {
   data?: T;
   message?: string;
   isUpdate?: boolean;
+  count?: number;
 }
 
 export interface PlantFormData {
