@@ -53,29 +53,15 @@ export const fetchPlantsData = createAsyncThunk(
     );
 
     if (!response.ok) {
+      if (response.status === 404) {
+        // Handle case when no plants found for this email
+        return [];
+      }
       throw new Error('Failed to fetch plants data');
     }
 
     const result: ApiResponse<Plant[]> = await response.json();
     return result.data || [];
-  }
-);
-
-export const deletePlant = createAsyncThunk(
-  'plants/deletePlant',
-  async (plantId: string): Promise<string> => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hackathons/delete-plant/${plantId}`,
-      {
-        method: 'DELETE',
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error('Failed to delete plant');
-    }
-
-    return plantId;
   }
 );
 
@@ -97,9 +83,6 @@ const plantsSlice = createSlice({
       if (index !== -1) {
         state.plants[index] = action.payload;
       }
-    },
-    removePlant: (state, action: PayloadAction<string>) => {
-      state.plants = state.plants.filter(p => getPlantId(p) !== action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -132,21 +115,10 @@ const plantsSlice = createSlice({
       .addCase(savePlantData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to save plant data';
-      })
-      .addCase(deletePlant.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(deletePlant.fulfilled, (state, action) => {
-        state.loading = false;
-        state.plants = state.plants.filter(p => getPlantId(p) !== action.payload);
-      })
-      .addCase(deletePlant.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'Failed to delete plant';
       });
   },
 });
 
-export const { setSelectedPlant, clearError, addPlant, updatePlant, removePlant } = plantsSlice.actions;
+export const { setSelectedPlant, clearError, addPlant, updatePlant } = plantsSlice.actions;
+
 export default plantsSlice.reducer;
