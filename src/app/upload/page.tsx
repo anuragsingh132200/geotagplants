@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { AppDispatch } from '@/lib/store';
 import { extractLocationData } from '@/lib/slices/uploadSlice';
 import { savePlantData } from '@/lib/slices/plantsSlice';
-import { uploadImageWithProgress } from '@/lib/services/cloudinary';
+import { uploadImageWithProgress, generateUploadedImageName } from '@/lib/services/cloudinary';
 
 // Dynamically import mini map for step 3
 const MiniMap = dynamic(() => import('@/components/mini-map'), { ssr: false });
@@ -34,20 +34,17 @@ export default function UploadPage() {
     const [imageName, setImageName] = useState('');
     const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
 
-    // Settings
-    const [settings, setSettings] = useState({ email: '' });
-
-    useEffect(() => {
-        const email = typeof window !== 'undefined' ? localStorage.getItem('user_email') || process.env.NEXT_PUBLIC_USER_EMAIL || 'anurag132200@gmail.com' : 'anurag132200@gmail.com';
-        setSettings({ email });
-    }, []);
+    // Settings from env
+    const email = process.env.NEXT_PUBLIC_USER_EMAIL || 'anurag132200@gmail.com';
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         const file = acceptedFiles[0];
         if (file) {
             setFile(file);
             setPreview(URL.createObjectURL(file));
-            setImageName(file.name.split('.')[0]);
+            // Generate API-compatible image name with embedded coords format
+            const apiImageName = generateUploadedImageName(file.name);
+            setImageName(apiImageName);
             setStep(2);
         }
     }, []);

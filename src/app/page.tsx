@@ -20,8 +20,10 @@ const MapWithNoSSR = dynamic(() => import('@/components/farm-map'), {
 export default function Home() {
   const { plants, loading } = useSelector((state: RootState) => state.plants);
 
+  // Mobile: account for header (64px) + bottom nav (64px) + padding
+  // Desktop: account for header + sidebar padding
   return (
-    <div className="h-[calc(100vh-8rem)] md:h-[calc(100vh-10rem)] relative rounded-3xl overflow-hidden shadow-2xl border border-border/50 animate-in zoom-in-95 duration-700">
+    <div className="h-[calc(100vh-12rem)] md:h-[calc(100vh-8rem)] relative rounded-3xl overflow-hidden shadow-2xl border border-border/50 animate-in zoom-in-95 duration-700">
       {loading ? (
         <div className="absolute inset-0 flex items-center justify-center bg-muted/20 backdrop-blur-sm z-10">
           <Loader2 className="w-10 h-10 animate-spin text-primary" />
