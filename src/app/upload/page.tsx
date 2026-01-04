@@ -42,7 +42,7 @@ export default function UploadPage() {
     const [currentProcessingIndex, setCurrentProcessingIndex] = useState<number | null>(null);
 
     // Settings from env
-    const email = process.env.NEXT_PUBLIC_USER_EMAIL || 'anurag@gmail.com';
+    const email = process.env.NEXT_PUBLIC_USER_EMAIL || 'anurag9@gmail.com';
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         const newFiles = acceptedFiles.map(file => ({
