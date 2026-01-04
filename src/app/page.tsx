@@ -33,7 +33,7 @@ export default function Home() {
       )}
 
       {/* Floating Action Button */}
-      <div className="absolute bottom-6 right-6 z-[1000]">
+      <div className="absolute bottom-6 right-6 z-[1002]">
         <Link href="/upload">
           <Button
             size="lg"
@@ -45,7 +45,7 @@ export default function Home() {
       </div>
 
       {/* Plants Counter */}
-      <div className="absolute top-4 left-4 z-[1000] bg-background/90 backdrop-blur px-4 py-2 rounded-xl shadow-lg border border-border/50">
+      <div className="absolute top-4 right-6 z-[1001] bg-background/90 backdrop-blur px-4 py-2 rounded-xl shadow-lg border border-border/50">
         <p className="text-sm font-semibold text-foreground">
           {plants.length} Plants Tagged
         </p>
