@@ -1,0 +1,68 @@
+.farm-map {
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.farm-map-empty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.farm-map-empty p {
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.leaflet-container {
+  border-radius: 12px;
+}
+
+.plant-popup {
+  min-width: 200px;
+}
+
+.plant-popup-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.plant-popup-title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  word-break: break-word;
+}
+
+.plant-popup-info {
+  margin-bottom: 12px;
+}
+
+.plant-popup-info p {
+  margin: 4px 0;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+.plant-popup-info strong {
+  color: #1f2937;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+}
+
+.leaflet-popup-content {
+  margin: 12px;
+}
