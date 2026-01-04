@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Outfit } from "next/font/google";
 import Providers from '@/components/providers';
+import Layout from '@/components/layout';
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "GeoTag Plants - Farm Management System",
+  title: "AgroTag - Farm Management System",
   description: "Upload and visualize geo-tagged plant images on your farm",
 };
 
@@ -26,10 +29,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${dmSans.variable} ${outfit.variable} antialiased`}
       >
         <Providers>
-          {children}
+          <Layout>
+            {children}
+          </Layout>
         </Providers>
       </body>
     </html>
