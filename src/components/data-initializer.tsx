@@ -10,7 +10,7 @@ export default function DataInitializer() {
   
   useEffect(() => {
     // Fetch plants data when the app initializes
-    const email = process.env.NEXT_PUBLIC_USER_EMAIL || 'anurag9@gmail.com';
+    const email = process.env.NEXT_PUBLIC_USER_EMAIL || 'anurag3@gmail.com';
     dispatch(fetchPlantsData(email));
   }, [dispatch]);
 

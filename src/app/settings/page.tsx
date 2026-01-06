@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Cloud, User, CheckCircle, Settings } from 'lucide-react';
 
 export default function SettingsPage() {
-    const email = process.env.NEXT_PUBLIC_USER_EMAIL || 'anurag9@gmail.com';
+    const email = process.env.NEXT_PUBLIC_USER_EMAIL || 'anurag3@gmail.com';
     const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dlot6ojqh';
 
     return (
